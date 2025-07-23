@@ -24,19 +24,23 @@
         <input type="hidden" name="foto" id="fotoInput">
         <!-- Input Teks -->
         <div>
-            <label for="teks">Judul:</label>
+            <label for="team">Team:</label>
+            <input type="text" name="team" id="team" required>
+        </div>
+        <div>
+            <label for="judul">Judul:</label>
             <input type="text" name="judul" id="judul" required>
         </div>
         <div>
-            <label for="teks">PIC:</label>
+            <label for="pic">PIC:</label>
             <input type="text" name="pic" id="pic" required>
         </div>
         <div>
-            <label for="teks">Keterangan:</label>
+            <label for="keterangan">Keterangan:</label>
             <input type="text" name="keterangan" id="keterangan" required>
         </div>
         <div>
-            <label for="teks">Penanganan:</label>
+            <label for="penanganan">Penanganan:</label>
             <input type="text" name="penanganan" id="penanganan" required>
         </div>
         <button type="submit">Submit</button>
