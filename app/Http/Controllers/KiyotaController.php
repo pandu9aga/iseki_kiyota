@@ -266,26 +266,24 @@ class KiyotaController extends Controller
 
     public function unduhTes(Request $request)
     {
-        $ppt = new PhpPresentation();
-        $slide = $ppt->getActiveSlide();
+        $presentation = new PhpPresentation();
 
-        $text = new \PhpOffice\PhpPresentation\Shape\RichText();
-        $text->createTextRun("Tes");
-        $slide->addShape($text);
+        // Create slide
+        $currentSlide = $presentation->getActiveSlide();
 
-        $writer = IOFactory::createWriter($ppt, 'PowerPoint2007');
-        while (ob_get_level()) {
-            ob_end_clean();
-        }
-        ob_start();
-        $writer->save('php://output');
-        $pptData = ob_get_clean();
+        // Create a shape (text)
+        $shape = $currentSlide->createRichTextShape()
+                ->setHeight(300)
+                ->setWidth(600)
+                ->setOffsetX(170)
+                ->setOffsetY(180);
+        $shape->getActiveParagraph()->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $textRun = $shape->createTextRun('Thank you for using PHPPresentation!');
+        $textRun->getFont()->setBold(true)
+                            ->setSize(60)
+                            ->setColor(new Color('FFE06B20'));
 
-        header_remove("Content-Encoding");
-
-        return Response::make($pptData, 200, [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            'Content-Disposition' => 'attachment; filename="test.pptx"',
-        ]);
+        $writerPPTX = IOFactory::createWriter($presentation, 'PowerPoint2007');
+        $writerPPTX->save(__DIR__ . '/sample.pptx');
     }
 }
